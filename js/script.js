@@ -133,20 +133,22 @@ var quotes=[
 var viewedQuotes =[];
 
 	const getRandomQuote = () => {
-		var sourceLength = quotes.length; 
-		var randomNumber = Math.floor(Math.random()*sourceLength); 
-		for (var i = 0; i <= sourceLength; i += 1) { 
-			var quote = quotes[randomNumber].quote; 
-			var source = quotes[randomNumber].source; 
-			return  quote + '<h5> ' + source + ' </h5>';
-		}					
-	}
+    var theQuote = Math.floor(Math.random() * quotes.length);
+    var splicedQuote = quotes.splice(theQuote, 1)[0];
+    viewedQuotes.push(splicedQuote);
+    if (quotes.length == 0) {
+      quotes.push(viewedQuotes);
+      viewedQuotes = [];
+    }
+    return quotes[theQuote];
+}
 
 
-	const printQuote = () => {
-    getRandomQuote();
-    document.getElementById('quote-box').innerHTML = 
-    '<p class = "quote">' + getRandomQuote() + '</p>';
+const printQuote = () => {
+    var selectedRandomQuote = getRandomQuote();
+  var html = '<p class="quote">' + selectedRandomQuote.quote + '</p>'
+  + '<p class="source">' + selectedRandomQuote.source;
+  document.getElementById('quote-box').innerHTML = html;
 
 }
 
